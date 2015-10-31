@@ -20,7 +20,7 @@ namespace fuzzy {
 								}
 								result = vec_values[0]; 
 								auto val_it = vec_values.rbegin();
-								for (auto key_it = vec_keys.rbegin(); key_it != (vec_keys.rend()--); key_it++) {
+								for (auto key_it = vec_keys.rbegin(); key_it != vec_keys.rend(); key_it++) {
 									if (var_val >= *key_it) {
 										result = *val_it;
 										break;
