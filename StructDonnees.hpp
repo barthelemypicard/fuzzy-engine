@@ -5,6 +5,7 @@
 
 
 namespace fuzzy {
+	typedef std::string Objet;
 
 	/* ----- Classe LingVar -----
 	LingVar représente une variable linguistique floue.
@@ -27,9 +28,12 @@ namespace fuzzy {
 		std::vector<float> 	vec_values;
 
 	public:
+		LingVar();
 		LingVar(std::string n, std::string d, VarType vt);
 		LingVar(std::string n, std::string d, std::vector<float> vk, std::vector<float> vv);
 		~LingVar();
 		float getMembershipValue(float var_val);
 	};
+
+
 }

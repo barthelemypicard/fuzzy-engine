@@ -5,6 +5,9 @@
 
 
 namespace fuzzy {
+	LingVar::LingVar() {
+		std::cout << "Initialisation vide de LingVar." << std::endl;
+	}
 	LingVar::LingVar(std::string n, std::string d, VarType vt) : name(n), description(d), var_type(vt) {}
 	LingVar::LingVar(std::string n, std::string d, std::vector<float> vk, std::vector<float> vv) : name(n), description(d), vec_keys(vk), vec_values(vv) {
 		var_type 	= VarType::VECTOR;
