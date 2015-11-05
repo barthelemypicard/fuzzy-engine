@@ -62,9 +62,13 @@ namespace fuzzy {
 		data.erase(regle);
 	}
 	Regle BaseRegles::get(const std::string& nom) const {
-		data.at(nom);
+		return data.at(nom);
 	}
 	Regle BaseRegles::operator()(const std::string& nom) const {
-		get(nom);
+		return get(nom);
 	}
+
+
+	Fait::Fait() {}
+	Fait::~Fait() {}
 }
