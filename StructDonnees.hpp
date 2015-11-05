@@ -7,6 +7,12 @@
 namespace fuzzy {
 	typedef std::string Objet;
 
+	enum VarType : int {
+		VECTOR,
+		TRAPEZE,
+		GAUSSIAN
+	};
+	
 	/* ----- Classe LingVar -----
 	LingVar représente une variable linguistique floue.
 	Celle-ci pouvant être représentée par différent types de données
@@ -15,11 +21,6 @@ namespace fuzzy {
 	*/
 	class LingVar {
 	public:
-	enum VarType : int {
-		VECTOR,
-		TRAPEZE,
-		GAUSSIAN
-	};
 		std::string 	name;
 		std::string 	description;
 		VarType 			var_type;
