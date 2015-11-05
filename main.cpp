@@ -5,7 +5,7 @@
 
 
 int main(int argc, char* argv[]) {
-	std::cout << "Start motherfuckers" << std::endl;
+	std::cout << "Start" << std::endl;
 
 	std::vector<float> vk = {0.0, 2.0, 4.0, 6.0, 8.0, 10.0,
 									 12.0, 14.0, 16.0, 18.0, 20.0};
