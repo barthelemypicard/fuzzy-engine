@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "StructDonnees.hpp"
 
@@ -40,7 +41,30 @@ namespace fuzzy {
 	}
 
 	
-	Regle::Regle(std::string n, std::vector<std::pair<std::string, std::string>> p, std::pair<std::string, std::string> c, bool f, float cf) : nom(n), flou(f), coeff(cf) {
+	Regle::Regle(std::string n, std::vector<std::pair<std::string, std::string> > p, std::pair<std::string, std::string> c, bool f, float cf) : nom(n), flou(f), coeff(cf) {
 	}
 	Regle::~Regle() {}
+
+
+	BaseRegles::BaseRegles() {}
+	BaseRegles::BaseRegles(std::vector<Regle> regles) {
+		for (auto& it: regles) {
+			data.insert(std::pair<std::string, Regle>(it.nom, it));
+		}
+	}
+	BaseRegles::~BaseRegles() {}
+	void BaseRegles::addRegles(std::vector<Regle> regles) {
+		for (auto& it: regles) {
+			data.insert(std::pair<std::string, Regle>(it.nom, it));
+		}
+	}
+	void BaseRegles::rmRegle(std::string regle) {
+		data.erase(regle);
+	}
+	Regle BaseRegles::get(const std::string& nom) const {
+		data.at(nom);
+	}
+	Regle BaseRegles::operator()(const std::string& nom) const {
+		get(nom);
+	}
 }

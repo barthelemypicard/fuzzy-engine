@@ -25,4 +25,12 @@ int main(int argc, char* argv[]) {
 	std::pair<std::string, std::string> tc = {"niveau_biolo", "TB"};
 	fuzzy::Regle rgl("R1", tp, tc, true, 1.0);
 	std::cout << rgl.nom << std::endl;
+	fuzzy::Regle rgl2("R2", tp, tc, true, 0.5);
+	fuzzy::Regle rgl3("R1", tp, tc, true, 0.75);
+	std::vector<fuzzy::Regle> brgl;
+	brgl.push_back(rgl);
+	brgl.push_back(rgl2);
+	brgl.push_back(rgl3);
+	fuzzy::BaseRegles br(brgl);
+	std::cout << brgl(rgl.nom).coeff << ", " << brgl(rgl2.nom).coeff << std::endl;
 }
