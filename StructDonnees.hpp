@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <memory>
 
 namespace fuzzy {
 	typedef std::string Objet;
@@ -36,14 +37,14 @@ namespace fuzzy {
 		float getMembershipValue(float var_val);
 	};
 
-
+	class Fait;
 	class Regle {
 	public:
-		std::string 										nom;
-		std::vector<std::pair<Objet, LingVar> > 	prem;
-		std::pair<Objet, LingVar> 						concl;
-		bool 													flou;
-		float 												coeff;
+		std::string 																nom;
+		std::vector<std::pair<Fait, std::shared_ptr<LingVar> > > 	prem;
+		std::pair<std::shared_ptr<Fait>, std::shared_ptr<LingVar> >	concl;
+		bool 																			flou;
+		float 																		coeff;
 
 		Regle(std::string n, std::vector<std::pair<std::string, std::string> > p, std::pair<std::string, std::string> c, bool f, float cf);
 		~Regle();
@@ -63,5 +64,21 @@ namespace fuzzy {
 		void 	rmRegle(std::string regle);
 		Regle get(const std::string& nom) const;
 		Regle operator()(const std::string& nom) const;
+	};
+
+
+	class Fait {
+	public:
+		std::string 									nom;
+		bool 												flou;
+		std::vector<std::shared_ptr<Regle> > 	prem;
+		std::vector<std::shared_ptr<Regle> > 	concl;
+		std::vector<std::shared_ptr<Regle> > 	metaprem;
+		bool 												eval;
+		float 											coeff;
+		std::string 									texte;
+
+		Fait();
+		~Fait();
 	};
 }
