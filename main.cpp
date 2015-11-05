@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "StructDonnees.hpp"
-#include "BaseRegles.hpp"
+// #include "BaseRegles.hpp"
 
 int main(int argc, char* argv[]) {
 	std::cout << "Start" << std::endl;
