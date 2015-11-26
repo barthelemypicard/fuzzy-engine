@@ -52,10 +52,13 @@ namespace fuzzy {
 			data.insert(std::pair<std::string, Regle>(it.nom, it));
 		}
 	}
-	BaseRegles::BaseRegles(const BaseRegles& br) {
-		data = br.getData();
-	}
+	BaseRegles::BaseRegles(const BaseRegles& br) : data(br.getData()) {}
 	BaseRegles& BaseRegles::operator=(const BaseRegles& br) {
+		data = br.getData();
+		return *this;
+	}
+	BaseRegles::BaseRegles(BaseRegles&& br) : data(br.getData()) {}
+	BaseRegles& BaseRegles::operator=(BaseRegles&& br) {
 		data = br.getData();
 		return *this;
 	}
@@ -89,6 +92,16 @@ namespace fuzzy {
 			data.insert(std::pair<std::string, Fait>(it.nom, it));
 		}
 	}
+	BaseFaits::BaseFaits(const BaseFaits& bf) : data(bf.getData()) {}
+	BaseFaits& BaseFaits::operator=(const BaseFaits& bf) {
+		data = bf.getData();
+		return *this;
+	}
+	BaseFaits::BaseFaits(BaseFaits&& bf) : data(bf.getData()) {}
+	BaseFaits& BaseFaits::operator=(BaseFaits&& bf) {
+		data = bf.getData();
+		return *this;
+	}
 	BaseFaits::~BaseFaits() {}
 	void BaseFaits::addFaits(std::vector<Fait> faits) {
 		for (auto& it: faits) {
@@ -104,6 +117,34 @@ namespace fuzzy {
 	Fait BaseFaits::operator()(const std::string& nom) const {
 		return get(nom);
 	}
+	std::map<std::string, Fait> BaseFaits::getData() const {
+		return data;
+	}
 
 
+
+	std::ostream& operator<<(std::ostream& os, const BaseRegles& br) {
+		for (auto& it: br.data) {
+			os << it.second.nom << ": Si ";
+			
+			for (auto& it_vec: it.second.prem) {
+				// os << "(" << it_vec.first->nom << ", ";
+				// os << it_vec.second->name << ")" << " et ";
+			}
+			os << " alors ";
+			// os << "(" << it.second.concl.first->nom; 
+			// os << ", " << it.second.concl.second->name;
+			os << ")" << std::endl;
+			os << "Flou: " << it.second.flou ? "true" : "false";
+			os << std::endl;
+			os << "Coeff: " << it.second.coeff << std::endl << std::endl; 
+		}
+
+		return os; 
+	}	
+	std::ostream& operator<<(std::ostream& os, const BaseFaits& c);
+
+
+
+	
 }

@@ -41,7 +41,7 @@ namespace fuzzy {
 	class Regle {
 	public:
 		std::string 																nom;
-		std::vector<std::pair<Fait, std::shared_ptr<LingVar> > > 	prem;
+		std::vector<std::pair<std::shared_ptr<Fait>, std::shared_ptr<LingVar> > > 	prem;
 		std::pair<std::shared_ptr<Fait>, std::shared_ptr<LingVar> >	concl;
 		bool 																			flou;
 		float 																		coeff;
@@ -69,7 +69,8 @@ namespace fuzzy {
 		Regle get(const std::string& nom) const;
 		Regle operator()(const std::string& nom) const;
 		std::map<std::string, Regle> getData() const; 
-		// std::ostream& operator<<(std::ostream& os, const BaseRegles& br);	
+
+		friend std::ostream& operator<<(std::ostream& os, const BaseRegles& br);	
 	};
 
 
@@ -95,10 +96,10 @@ namespace fuzzy {
 	public:
 		BaseFaits();
 		BaseFaits(std::vector<Fait> faits);
-		BaseFaits(const BaseFaits& br);
-		BaseFaits& operator=(const BaseFaits& br);
-		BaseFaits(BaseRegles&& br);
-		BaseFaits& operator=(BaseRegles&& br);
+		BaseFaits(const BaseFaits& bf);
+		BaseFaits& operator=(const BaseFaits& bf);
+		BaseFaits(BaseFaits&& bf);
+		BaseFaits& operator=(BaseFaits&& bf);
 		~BaseFaits();
 
 		void addFaits(std::vector<Fait> faits);
@@ -106,6 +107,11 @@ namespace fuzzy {
 		Fait get(const std::string& fait) const;
 		Fait operator()(const std::string& fait) const;
 		std::map<std::string, Fait> getData() const; 
-		// std::ostream& operator<<(std::ostream& os, const BaseFaits& c);	
+
+		friend std::ostream& operator<<(std::ostream& os, const BaseFaits& bf);	
 	};
+
+	
+	std::ostream& operator<<(std::ostream& os, const BaseRegles& br);	
+	std::ostream& operator<<(std::ostream& os, const BaseFaits& bf);	
 }
