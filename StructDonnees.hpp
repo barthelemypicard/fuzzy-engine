@@ -76,14 +76,14 @@ namespace fuzzy {
 
 	class Fait {
 	public:
-		std::string 									nom;
-		bool 												flou;
+		std::string 				nom;
+		bool 					flou;
 		std::vector<std::shared_ptr<Regle> > 	prem;
 		std::vector<std::shared_ptr<Regle> > 	concl;
 		std::vector<std::shared_ptr<Regle> > 	metaprem;
-		bool 												eval;
-		float 											coeff;
-		std::string 									texte;
+		bool 					eval;
+		float 					coeff;
+		std::string 			        texte;
 
 		Fait(std::string n, bool f, bool e, float c, std::string t);
 		~Fait();
