@@ -8,12 +8,27 @@
 fuzzy::BaseRegles fuzzy::Parser::parseRegles(const std::string filename){
   std::ifstream fichier(filename);
   if(fichier){
-    std::string prem_p1, prem_p2;
+    fuzzy::BaseRegles br;
+    std::vector<fuzzy::Regle> tr;
+
+    std::string prem, varLing;
     std::string nom;
     std::vector< std::pair<std::string, std::string> > premisses;
     std::pair<std::string, std::string> conclusion;
     bool est_floue;
     float coeff;
+
+    while(getline(fichier, nom)){
+      fichier.ignore();
+      while(fichier>>
+      fichier>>;
+      fichier>>prem;
+      fichier>>varLing;
+      tr.pushBack(Regle(temp, premisses, conclusion, est_floue, coeff));
+    }
+    br.addRegles(tr);
+
+
     
     std::getline(fichier,nom);
     fichier>>prem_p1;
@@ -33,7 +48,7 @@ fuzzy::BaseRegles fuzzy::Parser::parseRegles(const std::string filename){
   else{
     std::cout<<"Erreur: fichier impossible à ouvrir"<<std::endl;
   }
-  return tableau_regles;
+  return br;
 }
 
 fuzzy::BaseFaits fuzzy::Parser::parseFaits(const fuzzy::BaseRegles& br){
