@@ -5,8 +5,10 @@
 
 namespace fuzzy{
   class Parser{
+
   private:
-    std::vector<Regle> tableau_regle;
+    std::vector<Regle> tableau_regles;
+
   public:
     std::vector<Regle> parse(std::string fileName);
   };
