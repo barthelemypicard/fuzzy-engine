@@ -58,12 +58,18 @@ namespace fuzzy {
 	public: 
 		BaseRegles();
 		BaseRegles(std::vector<Regle> regles);
+		BaseRegles(const BaseRegles& br);
+		BaseRegles& operator=(const BaseRegles& br);
+		BaseRegles(BaseRegles&& br);
+		BaseRegles& operator=(BaseRegles&& br);
 		~BaseRegles();
 
 		void 	addRegles(std::vector<Regle> regles);
 		void 	rmRegle(std::string regle);
 		Regle get(const std::string& nom) const;
 		Regle operator()(const std::string& nom) const;
+		std::map<std::string, Regle> getData() const; 
+		// std::ostream& operator<<(std::ostream& os, const BaseRegles& br);	
 	};
 
 
@@ -78,7 +84,28 @@ namespace fuzzy {
 		float 					coeff;
 		std::string 			        texte;
 
-		Fait();
+		Fait(std::string n, bool f, bool e, float c, std::string t);
 		~Fait();
+	};
+
+	class BaseFaits {
+	private:
+		std::map<std::string, Fait> data;
+
+	public:
+		BaseFaits();
+		BaseFaits(std::vector<Fait> faits);
+		BaseFaits(const BaseFaits& br);
+		BaseFaits& operator=(const BaseFaits& br);
+		BaseFaits(BaseRegles&& br);
+		BaseFaits& operator=(BaseRegles&& br);
+		~BaseFaits();
+
+		void addFaits(std::vector<Fait> faits);
+		void rmFait(std::string fait);
+		Fait get(const std::string& fait) const;
+		Fait operator()(const std::string& fait) const;
+		std::map<std::string, Fait> getData() const; 
+		// std::ostream& operator<<(std::ostream& os, const BaseFaits& c);	
 	};
 }

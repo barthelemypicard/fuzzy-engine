@@ -52,6 +52,13 @@ namespace fuzzy {
 			data.insert(std::pair<std::string, Regle>(it.nom, it));
 		}
 	}
+	BaseRegles::BaseRegles(const BaseRegles& br) {
+		data = br.getData();
+	}
+	BaseRegles& BaseRegles::operator=(const BaseRegles& br) {
+		data = br.getData();
+		return *this;
+	}
 	BaseRegles::~BaseRegles() {}
 	void BaseRegles::addRegles(std::vector<Regle> regles) {
 		for (auto& it: regles) {
@@ -67,8 +74,36 @@ namespace fuzzy {
 	Regle BaseRegles::operator()(const std::string& nom) const {
 		return get(nom);
 	}
+	std::map<std::string, Regle> BaseRegles::getData() const {
+		return data;
+	}
 
 
-	Fait::Fait() {}
+	Fait::Fait(std::string n, bool f, bool e, float c, std::string t) : nom(n), flou(f), eval(e), coeff(c), texte(t) {}
 	Fait::~Fait() {}
+
+
+	BaseFaits::BaseFaits() {}
+	BaseFaits::BaseFaits(std::vector<Fait> faits) {
+		for (auto& it: faits) {
+			data.insert(std::pair<std::string, Fait>(it.nom, it));
+		}
+	}
+	BaseFaits::~BaseFaits() {}
+	void BaseFaits::addFaits(std::vector<Fait> faits) {
+		for (auto& it: faits) {
+			data.insert(std::pair<std::string, Fait>(it.nom, it));
+		}
+	}
+	void BaseFaits::rmFait(std::string fait) {
+		data.erase(fait);
+	}
+	Fait BaseFaits::get(const std::string& nom) const {
+		return data.at(nom);
+	}
+	Fait BaseFaits::operator()(const std::string& nom) const {
+		return get(nom);
+	}
+
+
 }
