@@ -5,11 +5,11 @@
 #include <string>
 #include <iostream>
 
-std::vector<fuzzy::Regle> fuzzy::Parser::parse(std::string filename){
-  std::ifstream fichier("regles.txt");
+fuzzy::BaseRegles fuzzy::Parser::parseRegles(const std::string filename){
+  std::ifstream fichier(filename);
   if(fichier){
-    std::string nom;
     std::string prem_p1, prem_p2;
+    std::string nom;
     std::vector< std::pair<std::string, std::string> > premisses;
     std::pair<std::string, std::string> conclusion;
     bool est_floue;
@@ -28,7 +28,6 @@ std::vector<fuzzy::Regle> fuzzy::Parser::parse(std::string filename){
     fichier>>prem_p1;
     fichier>>coeff;
     est_floue=true;
-
     tableau_regles.push_back(Regle(nom, premisses, conclusion, est_floue, coeff));
   }
   else{
@@ -36,3 +35,9 @@ std::vector<fuzzy::Regle> fuzzy::Parser::parse(std::string filename){
   }
   return tableau_regles;
 }
+
+fuzzy::BaseFaits fuzzy::Parser::parseFaits(const fuzzy::BaseRegles& br){
+
+  return BaseFaits bf();
+}
+

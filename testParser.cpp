@@ -2,9 +2,11 @@
 #include "StructDonnees.hpp"
 #include <vector>
 #include <string>
+#include 
 
 int main( int argc, const char* argv[] )
 {
-  fuzzy::Parser mon_parser;
-  std::vector<fuzzy::Regle> tab= mon_parser.parse("regles.txt");
+  fuzzy::BaseRegles br=fuzzy::Parser.parseRegles("regles.txt");
+  fuzzy::BaseFaits bf=fuzzy::Parser.parseFaits(br);
+  std::cout<<br;
 }
