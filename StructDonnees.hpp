@@ -45,7 +45,8 @@ namespace fuzzy {
 		std::pair<std::shared_ptr<Fait>, std::shared_ptr<LingVar> >	concl;
 		bool 																			flou;
 		float 																		coeff;
-
+		
+		Regle();
 		Regle(std::string n, std::vector<std::pair<std::string, std::string> > p, std::pair<std::string, std::string> c, bool f, float cf);
 		~Regle();
 	};
@@ -85,13 +86,16 @@ namespace fuzzy {
 		float 					coeff;
 		std::string 			        texte;
 
+		Fait();
 		Fait(std::string n, bool f, bool e, float c, std::string t);
 		~Fait();
+		void setEval(bool e);
+		void setCoeff(float c);
 	};
 
 	class BaseFaits {
 	private:
-		std::map<std::string, Fait> data;
+		std::map<std::string, Fait> 	data;
 
 	public:
 		BaseFaits();
@@ -104,8 +108,8 @@ namespace fuzzy {
 
 		void addFaits(std::vector<Fait> faits);
 		void rmFait(std::string fait);
-		Fait get(const std::string& fait) const;
-		Fait operator()(const std::string& fait) const;
+		Fait get(const std::string& fait);
+		Fait operator()(const std::string& fait);
 		std::map<std::string, Fait> getData() const; 
 
 		friend std::ostream& operator<<(std::ostream& os, const BaseFaits& bf);	

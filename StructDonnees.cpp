@@ -40,7 +40,8 @@ namespace fuzzy {
 		return result;
 	}
 
-	
+
+	Regle::Regle() {}	
 	Regle::Regle(std::string n, std::vector<std::pair<std::string, std::string> > p, std::pair<std::string, std::string> c, bool f, float cf) : nom(n), flou(f), coeff(cf) {
 	}
 	Regle::~Regle() {}
@@ -81,10 +82,12 @@ namespace fuzzy {
 		return data;
 	}
 
-
+	
+	Fait::Fait() {}
 	Fait::Fait(std::string n, bool f, bool e, float c, std::string t) : nom(n), flou(f), eval(e), coeff(c), texte(t) {}
 	Fait::~Fait() {}
-
+	void Fait::setEval(bool e) { std::cout << eval; eval = e; std::cout << eval << std::endl;}
+	void Fait::setCoeff(float c) { coeff = c; }
 
 	BaseFaits::BaseFaits() {}
 	BaseFaits::BaseFaits(std::vector<Fait> faits) {
@@ -111,10 +114,10 @@ namespace fuzzy {
 	void BaseFaits::rmFait(std::string fait) {
 		data.erase(fait);
 	}
-	Fait BaseFaits::get(const std::string& nom) const {
+	Fait BaseFaits::get(const std::string& nom) {
 		return data.at(nom);
 	}
-	Fait BaseFaits::operator()(const std::string& nom) const {
+	Fait BaseFaits::operator()(const std::string& nom) {
 		return get(nom);
 	}
 	std::map<std::string, Fait> BaseFaits::getData() const {
@@ -135,7 +138,7 @@ namespace fuzzy {
 			// os << "(" << it.second.concl.first->nom; 
 			// os << ", " << it.second.concl.second->name;
 			os << ")" << std::endl;
-			os << "Flou: " << it.second.flou ? "true" : "false";
+			os << "Flou: " << (it.second.flou ? "true" : "false");
 			os << std::endl;
 			os << "Coeff: " << it.second.coeff << std::endl << std::endl; 
 		}
