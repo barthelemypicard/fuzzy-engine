@@ -6,7 +6,9 @@
 namespace fuzzy{
   class Parser{
   public:
-    static BaseRegles parseRegles(const std::string fileName);
-    static BaseFaits parseFaits(const BaseRegles& br);
+    //static BaseRegles parseRegles(const std::string fileName);
+    static BaseFaits parseFaits_firstPass(const std::string filename, int n);
+    static BaseRegles parseRegles(std::string filename, int n);
+    static void parseFaits_secondPass(BaseFaits& bf, const BaseRegles& br);
   };
 }
