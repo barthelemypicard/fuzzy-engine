@@ -30,12 +30,10 @@ namespace fuzzy {
     return result;
   }
 
-	
-<<<<<<< HEAD
+        
   Regle::Regle(std::string n, std::vector<std::shared_ptr<Fait> > p, std::vector<std::shared_ptr<Fait> >  c, bool f, float cf) : nom(n), flou(f), coeff(cf) {
   }
   Regle::~Regle() {}
-=======
 	Regle::Regle(std::string n, std::vector<std::pair<std::string, std::string> > p, std::pair<std::string, std::string> c, bool f, float cf) : nom(n), flou(f), coeff(cf) {
 	}
 	Regle::~Regle() {}
@@ -75,7 +73,6 @@ namespace fuzzy {
 	std::map<std::string, Regle> BaseRegles::getData() const {
 		return data;
 	}
->>>>>>> 038fdfb93d1333ab2c63d4ed2ec38a5e7b95ad76
 
 
   BaseRegles::BaseRegles() {}
@@ -123,7 +120,6 @@ namespace fuzzy {
   Fait::~Fait() {}
 
 
-<<<<<<< HEAD
   BaseFaits::BaseFaits() {}
   BaseFaits::BaseFaits(std::vector<std::shared_ptr<Fait> > faits) {
     for (auto& it: faits) {
@@ -145,7 +141,6 @@ namespace fuzzy {
   std::shared_ptr<Fait> BaseFaits::operator()(const std::string& nom) const {
     return get(nom);
   }
-=======
 	BaseFaits::BaseFaits() {}
 	BaseFaits::BaseFaits(std::vector<Fait> faits) {
 		for (auto& it: faits) {
@@ -180,7 +175,6 @@ namespace fuzzy {
 	std::map<std::string, Fait> BaseFaits::getData() const {
 		return data;
 	}
->>>>>>> 038fdfb93d1333ab2c63d4ed2ec38a5e7b95ad76
 
 
 

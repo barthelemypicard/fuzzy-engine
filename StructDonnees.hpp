@@ -9,8 +9,7 @@ namespace fuzzy {
 
   typedef std::string Objet;
   typedef int Operateur;
-	
-<<<<<<< HEAD
+        
   /* ----- Classe LingVar -----
      LingVar représente une variable linguistique floue.
      Celle-ci pouvant être représentée par différent types de données
@@ -131,7 +130,6 @@ namespace fuzzy {
     // std::map<std::string, shared_ptr<Fait> > getData() const; 
     // // std::ostream& operator<<(std::ostream& os, const BaseFaits& c);	
   };
-=======
 	/* ----- Classe LingVar -----
 	LingVar représente une variable linguistique floue.
 	Celle-ci pouvant être représentée par différent types de données
@@ -231,6 +229,5 @@ namespace fuzzy {
 
 	
 	std::ostream& operator<<(std::ostream& os, const BaseRegles& br);	
-	std::ostream& operator<<(std::ostream& os, const BaseFaits& bf);	
->>>>>>> 038fdfb93d1333ab2c63d4ed2ec38a5e7b95ad76
+	std::ostream& operator<<(std::ostream& os, const BaseFaits& bf);
 }
