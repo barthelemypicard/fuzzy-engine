@@ -33,4 +33,8 @@ int main(int argc, char* argv[]) {
 	brgl.push_back(rgl3);
 	fuzzy::BaseRegles br(brgl);
 	std::cout << br.get(rgl2.nom).coeff << ", " << br(rgl3.nom).coeff << std::endl;
+
+	std::cout << "-----------" << std::endl;
+	std::cout << br << std::endl;
+
 }
