@@ -5,54 +5,79 @@
 #include <string>
 #include <iostream>
 
-fuzzy::BaseRegles fuzzy::Parser::parseRegles(const std::string filename){
-  std::ifstream fichier(filename);
-  if(fichier){
-    fuzzy::BaseRegles br;
-    std::vector<fuzzy::Regle> tr;
+// fuzzy::BaseRegles fuzzy::Parser::parseRegles(const std::string filename, fuzzy::BaseFaits& bf){
+//   std::ifstream fichier(filename);
+//   if(fichier){
+//     std::string tmp;
+//     fuzzy::BaseRegles br;
+//     fuzzy::Regle r;
+//     while(getline(fichier, r.nom)){//boucle sur les regles
+//     //   fichier.ignore();
+//     //   fichier>>tmp;//lecture de l'opérateur
+//     //   do{
+//     // 	fichier>>tmp;//lecture du fait
+//     // 	for(auto& i : bf.data){ //recherche du fait dans la base de faits
+//     // 	  if(i.first==tmp){
+//     // 	    (r.prem).push_back(make_shared(i))
+//     // 	    break;
+//     // 	  }
+//     // 	}
 
-    std::string prem, varLing;
-    std::string nom;
-    std::vector< std::pair<std::string, std::string> > premisses;
-    std::pair<std::string, std::string> conclusion;
-    bool est_floue;
-    float coeff;
+//     // 	if(tmp!=""){//retour écran en cas d'erreur
+//     // 	  std::cout<<"extaction fait: "<<tmp<<"impossible"<<std::endl;
+//     // 	}
+//     // 	fichier>>tmp;//lecture de la variable linguistique
+//     // 	fichier>>tmp;//lecture de l'opérateur suivant
+//     //   }while(tmp!="Alors");
+//     //   std::cout<<std::endl;
+//     // }
+//     return br;
+//   }
+//   else{
+//     std::cout<<"Parsing des regles: ouverture fichier impossible"<<std::endl;
+//     return fuzzy::BaseRegles();
+//   }
+// }
 
-    while(getline(fichier, nom)){
-      fichier.ignore();
-      while(fichier>>
-      fichier>>;
-      fichier>>prem;
-      fichier>>varLing;
-      tr.pushBack(Regle(temp, premisses, conclusion, est_floue, coeff));
-    }
-    br.addRegles(tr);
+// fuzzy::BaseFaits fuzzy::Parser::parseFaits_firstPass(std::string filename){
+//   fuzzy::BaseFaits bf;
+//   std::vector<fuzzy::Fait> vf;
+//   std::string tmp;
 
+//   std::ifstream fichier(filename);
+//   if(fichier){
+//     while(getline(fichier, tmp)){//boucle sur les regles
+//     //   fichier.ignore();
+//     //   std::cout<<"Regle: "<<tmp<<std::endl;
+//     //   fichier>>tmp;//lecture de l'opérateur
+//     //   do{
+//     // 	fichier>>tmp;//lecture du fait
+//     // 	for(auto& i : vf){ //ajout s'il n'est pas présent dans la base
+//     // 	  if(i.nom==tmp){
+//     // 	    tmp="";
+//     // 	    break;
+//     // 	  }
+//     // 	}
+//     // 	if(tmp!=""){
+//     // 	  vf.push_back(fuzzy::Fait(tmp, true, false, 0, "default text"));
+//     // 	  std::cout<<"extaction fait: "<<tmp<std::endl;
+//     // 	}
+//     // 	fichier>>tmp;//lecture de la variable linguistique
+//     // 	vf.back().value=LingVar("TB", "niveau scolaire", 
+//     // 	fichier>>tmp;//lecture de l'opérateur suivant
+//     //   }while(tmp!="Certitude");
+//     //   std::cout<<std::endl;
+//     // }
+//     // bf.addFaits(vf);
+//     return bf;
+//   }
+//   else{
+//     std::cout<<"Parsing des faits premiere passe: ouverture fichier impossible"<<std::endl;
+//     return fuzzy::BaseFaits();
+//   }
+// }
 
-    
-    std::getline(fichier,nom);
-    fichier>>prem_p1;
-    while(prem_p1!="Alors"){
-      fichier>>prem_p1;
-      fichier>>prem_p2;
-      premisses.push_back(std::pair<std::string, std::string>(prem_p1, prem_p2));
-    }
-    fichier>>prem_p1;
-    fichier>>prem_p2;
-    conclusion= std::pair<std::string, std::string>(prem_p1, prem_p2);
-    fichier>>prem_p1;
-    fichier>>coeff;
-    est_floue=true;
-    tableau_regles.push_back(Regle(nom, premisses, conclusion, est_floue, coeff));
-  }
-  else{
-    std::cout<<"Erreur: fichier impossible à ouvrir"<<std::endl;
-  }
-  return br;
-}
-
-fuzzy::BaseFaits fuzzy::Parser::parseFaits(const fuzzy::BaseRegles& br){
-
-  return BaseFaits bf();
-}
+// fuzzy::BaseFaits fuzzy::Parser::ParseFaits_secondPass(fuzzy::BaseRegles br, fuzzy::BaseFaits bf_1){
+//   return fuzzy::BaseFaits();
+// }
 
