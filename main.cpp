@@ -4,6 +4,7 @@
 
 #include "StructDonnees.hpp"
 #include "MoteurInference.hpp"
+#include "Parser.hpp"
 // #include "BaseRegles.hpp"
 
 int main(int argc, char* argv[]) {
@@ -47,7 +48,7 @@ int main(int argc, char* argv[]) {
 		R3 : C et E 	 -> F
 		R4 : E et B 	 -> C
 	*/	
-	
+/*	
 	std::vector<float> AB;
 	std::vector<float> B = {0.0, 0.005, 0.005, 0.01, 0.1, 0.3, 0.4, 0.6, 0.8, 0.9, 1.0};
 	std::vector<float> TB;
@@ -125,5 +126,19 @@ int main(int argc, char* argv[]) {
 		std::cout << pE->value.getMembershipValue(note) << " ";
 	}
 	std::cout << "}" << std::endl;
+	*/
 
+	
+  fuzzy::BaseFaits listeFaits;//ensemble des faits évaluables selon le fichier regles.txt
+  
+  fuzzy::BaseRegles regles;//ensemble des règles du fichier regles.txt
+
+  listeFaits=fuzzy::Parser::parseFaits_firstPass("regles.txt", 70); 
+               //ensemble des faits évaluables selon le fichier regles.txt
+               //Attention ici les fait de la base ne sont pas reliés à des règles
+  
+  regles=fuzzy::Parser::parseRegles("regles.txt", 70);
+               //ensemble des règles du fichier regles.txt
+               //Création de faits de référence pour regles
+	//std::shared_ptr<fuzzy::BaseFaits> base_faits(new fuzzy::Parser::parseFaits_firstPass("regles.txt", 70);
 }
