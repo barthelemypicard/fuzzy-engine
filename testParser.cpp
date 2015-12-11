@@ -30,9 +30,9 @@ int main( int argc, const char* argv[] )
 
   ////Test parser////
   fuzzy::BaseFaits listeFaits;//ensemble des faits évaluables selon le fichier regles.txt
-  
   fuzzy::BaseRegles regles;//ensemble des règles du fichier regles.txt
-
+  
+  
   listeFaits=fuzzy::Parser::parseFaits_firstPass("regles.txt", 70); 
                //ensemble des faits évaluables selon le fichier regles.txt
                //Attention ici les fait de la base ne sont pas reliés à des règles
@@ -42,7 +42,7 @@ int main( int argc, const char* argv[] )
                //Création de faits de référence pour regles
 
   fuzzy::Parser::parseFaits_secondPass(listeFaits, regles);
-               //remplissages des prémisses et conclusions des faits de listeFait aec les regles de regles
-  
-  
+               //remplissages des prémisses et conclusions des faits de listeFait 
+               //avec les regles de regles
+  fuzzy::Parser::parseFaits_bulletin("bulletin.txt", listeFaits);
 }

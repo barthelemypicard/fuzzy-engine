@@ -8,7 +8,7 @@
 void fuzzy::Parser::parseFaits_secondPass(fuzzy::BaseFaits& bf, const fuzzy::BaseRegles& br){
   //itérer sur les regles:
   for( auto it : br.getData()){ //itération sur la map de regles
-    for( auto it2 : (it.second)->prem){ //itération sur les premisses e la règle courante
+    for( auto it2 : (it.second)->prem){ //itération sur les premisses de la règle courante
       (bf.get(it2->nom)->prem).push_back(it.second);//ajout de la règle dans le tableau des premisses du fait
     }
     for( auto it2 : (it.second)->concl){ //itération sur les conclusions de la règle courante
@@ -69,6 +69,9 @@ fuzzy::BaseFaits fuzzy::Parser::parseFaits_firstPass(std::string filename, int n
   }
 }
 
+
+
+
 fuzzy::BaseRegles fuzzy::Parser::parseRegles(std::string filename, int n){
   std::ifstream fichier(filename);
   std::vector<std::shared_ptr<fuzzy::Regle> > vr;
@@ -111,6 +114,39 @@ fuzzy::BaseRegles fuzzy::Parser::parseRegles(std::string filename, int n){
     vr.push_back(std::make_shared<fuzzy::Regle>(r));
   }
   return fuzzy::BaseRegles(vr);
+}
+
+void fuzzy::Parser::parseFaits_bulletin(const std::string filename, fuzzy::BaseFaits& bf){
+  std::ifstream fichier(filename);
+  std::string tmp="init";
+  if(fichier){
+    while(fichier>>tmp){ //on boucle sur les lignes jusqu'à la fin du fichier
+      try{
+	std::shared_ptr<fuzzy::Fait> p=bf.get(tmp);
+	std::cout<<"Fait déja présent"<<std::endl;
+	p->eval=true;
+	fichier>>tmp;
+	p->value=fuzzy::LingVar("TB", "default description");
+	fichier>>tmp;
+	p->coeff=stof(tmp);
+	std::cout<<"evaluation faite"<<std::endl;
+      }
+      catch(const std::out_of_range& oor){
+	std::vector<std::shared_ptr<fuzzy::Fait> >v;
+	fuzzy::Fait f(tmp, true, true, 0, "default text");
+	fichier>>tmp;
+	f.value=fuzzy::LingVar(tmp, "default description");
+	fichier>>tmp;
+	f.coeff=stof(tmp);
+	v.push_back(std::make_shared<fuzzy::Fait>(f));
+	bf.addFaits(v);
+	std::cout<<"Fait ajouté à la base"<<std::endl<<"evaluation faite"<<std::endl;
+      }
+    }
+  }
+  else{
+    std::cout<<"Ouverture fichier bulletin impossible!"<<std::endl;
+  }
 }
 
 
