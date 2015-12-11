@@ -37,7 +37,7 @@ namespace fuzzy {
 
   ////////REGLES/////////
   Regle::Regle(std::string n, std::vector<std::shared_ptr<Fait> > p, std::vector<std::shared_ptr<Fait> >  c, bool f, float cf) 
-    : nom(n), flou(f), coeff(cf) {} //constructeur ave argumets
+    : nom(n), prem(p), concl(c), flou(f), coeff(cf) {} //constructeur ave argumets
 
   Regle::~Regle() {} //destructeur par défaut
 
@@ -94,7 +94,7 @@ namespace fuzzy {
   }
   
   bool Fait::evaluate(){
-    //à implémenter!!
+    eval = true;
     return true;
   }
 

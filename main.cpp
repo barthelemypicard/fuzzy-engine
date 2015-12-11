@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #include "StructDonnees.hpp"
 #include "MoteurInference.hpp"
@@ -38,59 +39,91 @@ int main(int argc, char* argv[]) {
 	std::cout << "-----------" << std::endl;
 	std::cout << br << std::endl;
 */	
+
 	/* ----- Premier test du moteur -----
 	A, B, C connus
-		R1 : A et B -> D
-		R2 : A et C -> E
-		R3 : C et D -> F
-		R4 : F et B -> G
-	*/
-	std::shared_ptr<fuzzy::Fait> 	pA = std::make_shared<fuzzy::Fait>();
-	std::shared_ptr<fuzzy::Fait> 	pB = std::make_shared<fuzzy::Fait>();
-	std::shared_ptr<fuzzy::Fait> 	pC = std::make_shared<fuzzy::Fait>();
-	std::shared_ptr<fuzzy::Fait> 	pD = std::make_shared<fuzzy::Fait>();
-	std::shared_ptr<fuzzy::Fait> 	pE = std::make_shared<fuzzy::Fait>();
-	std::shared_ptr<fuzzy::Fait> 	pF = std::make_shared<fuzzy::Fait>();
-	std::shared_ptr<fuzzy::Fait> 	pG = std::make_shared<fuzzy::Fait>();
+		R1 : A et B et C -> D
+		R2 : A et B 	 -> E
+		R3 : C et E 	 -> F
+		R4 : E et B 	 -> C
+	*/	
+	
+	std::vector<float> AB;
+	std::vector<float> B = {0.0, 0.005, 0.005, 0.01, 0.1, 0.3, 0.4, 0.6, 0.8, 0.9, 1.0};
+	std::vector<float> TB;
+	for (auto& b : B) {
+		AB.push_back(std::sqrt(b));
+		TB.push_back(b*b);
+	}
 
-	std::shared_ptr<fuzzy::Regle> 	pR1 = std::make_shared<fuzzy::Regle>();
-	std::shared_ptr<fuzzy::Regle> 	pR2 = std::make_shared<fuzzy::Regle>();
-	std::shared_ptr<fuzzy::Regle> 	pR3 = std::make_shared<fuzzy::Regle>();
-	std::shared_ptr<fuzzy::Regle> 	pR4 = std::make_shared<fuzzy::Regle>();
+	typedef std::pair<std::shared_ptr<fuzzy::Fait>, std::shared_ptr<fuzzy::LingVar> > FACT;
+	typedef std::shared_ptr<fuzzy::Fait> fait_ptr;
+
+	std::shared_ptr<fuzzy::Fait> 	pA = std::make_shared<fuzzy::Fait>("A");
+	std::shared_ptr<fuzzy::Fait> 	pB = std::make_shared<fuzzy::Fait>("B");
+	std::shared_ptr<fuzzy::Fait> 	pC = std::make_shared<fuzzy::Fait>("C");
+	std::shared_ptr<fuzzy::Fait> 	pD = std::make_shared<fuzzy::Fait>("D");
+	std::shared_ptr<fuzzy::Fait> 	pE = std::make_shared<fuzzy::Fait>("E");
+	std::shared_ptr<fuzzy::Fait> 	pF = std::make_shared<fuzzy::Fait>("F");
+	std::shared_ptr<fuzzy::Fait> 	pG = std::make_shared<fuzzy::Fait>("G");
+
+	fait_ptr pR1_A = std::make_shared<fuzzy::Fait>("A");
+	fait_ptr pR1_B = std::make_shared<fuzzy::Fait>("B");
+	fait_ptr pR1_C = std::make_shared<fuzzy::Fait>("C");
+	fait_ptr pR1_D = std::make_shared<fuzzy::Fait>("D");
+	std::shared_ptr<fuzzy::Regle> 	pR1 = std::make_shared<fuzzy::Regle>(fuzzy::Regle("R1", {pR1_A, pR1_B, pR1_C}, {pR1_D}, false, 1.0));
+	fait_ptr pR2_A = std::make_shared<fuzzy::Fait>("A");
+	fait_ptr pR2_B = std::make_shared<fuzzy::Fait>("B");
+	fait_ptr pR2_E = std::make_shared<fuzzy::Fait>("E");
+	std::shared_ptr<fuzzy::Regle> 	pR2 = std::make_shared<fuzzy::Regle>(fuzzy::Regle("R2", {pR2_A, pR2_B}, {pR2_E}, false, 1.0));
+	fait_ptr pR3_C = std::make_shared<fuzzy::Fait>("C");
+	fait_ptr pR3_E = std::make_shared<fuzzy::Fait>("E");
+	fait_ptr pR3_F = std::make_shared<fuzzy::Fait>("F");
+	std::shared_ptr<fuzzy::Regle> 	pR3 = std::make_shared<fuzzy::Regle>(fuzzy::Regle("R3", {pR3_C, pR3_E}, {pR3_F}, false, 1.0));
+	fait_ptr pR4_E = std::make_shared<fuzzy::Fait>("E");
+	fait_ptr pR4_B = std::make_shared<fuzzy::Fait>("B");
+	fait_ptr pR4_C = std::make_shared<fuzzy::Fait>("C");
+	std::shared_ptr<fuzzy::Regle> 	pR4 = std::make_shared<fuzzy::Regle>(fuzzy::Regle("R4", {pR4_E, pR4_B}, {pR4_C}, false, 1.0));
 	
 	pA->nom = "A"; pA->eval = true;
 	pA->prem.push_back(pR1); pA->prem.push_back(pR2);
 	pB->nom = "B"; pB->eval = true;
-	pB->prem.push_back(pR1); pB->prem.push_back(pR4);
-	pC->nom = "C"; pC->eval = true;
-	pC->prem.push_back(pR2); pC->prem.push_back(pR3);
+	pB->prem.push_back(pR1); pB->prem.push_back(pR2); pB->prem.push_back(pR4);
+	pC->nom = "C"; pC->eval = false;
+	pC->prem.push_back(pR2); pC->prem.push_back(pR2);
+	pC->concl.push_back(pR4);
 	pD->nom = "D"; pD->eval = false;
-	pD->prem.push_back(pR3); 
+	//pD->prem.push_back(pR3); 
 	pD->concl.push_back(pR1);
 	pE->nom = "E"; pE->eval = false;
+	pE->prem.push_back(pR3); pE->prem.push_back(pR4);
 	pE->concl.push_back(pR2);
 	pF->nom = "F"; pF->eval = false;
-	pF->prem.push_back(pR4); 
+	//pF->prem.push_back(pR4); 
 	pF->concl.push_back(pR3);
-	pG->nom = "G"; pG->eval = false;
-	pG->concl.push_back(pR4);
+	//pG->nom = "G"; pG->eval = false;
+	//pG->prem.push_back(pR3);
+	//pG->concl.push_back(pR4);
 
-	typedef std::pair<std::shared_ptr<fuzzy::Fait>, std::shared_ptr<fuzzy::LingVar> > FACT;
-	pR1->nom = "R1"; 				pR1->concl = FACT(pD, 0);
-	pR1->prem.push_back(FACT(pA, 0)); 	pR1->prem.push_back(FACT(pB, 0));
-	pR2->nom = "R2"; 				pR2->concl = FACT(pE, 0);
-	pR2->prem.push_back(FACT(pA, 0)); 	pR2->prem.push_back(FACT(pC, 0));
-	pR3->nom = "R3"; 				pR3->concl = FACT(pF, 0);
-	pR3->prem.push_back(FACT(pC, 0)); 	pR3->prem.push_back(FACT(pD, 0));
-	pR4->nom = "R4"; 				pR4->concl = FACT(pG, 0);
-	pR4->prem.push_back(FACT(pF, 0)); 	pR4->prem.push_back(FACT(pB, 0));
+	pR2_A->value = fuzzy::LingVar("TB", "", fuzzy::MoteurInference::liste_notes, TB);
+	pR2_B->value = fuzzy::LingVar("B", "", fuzzy::MoteurInference::liste_notes, B);
+	pR2_E->value = fuzzy::LingVar("B", "", fuzzy::MoteurInference::liste_notes, B);
+	pA->value = fuzzy::LingVar("TB", "", fuzzy::MoteurInference::liste_notes, B);
+	pB->value = fuzzy::LingVar("B", "", fuzzy::MoteurInference::liste_notes, TB);
 
-	std::shared_ptr<fuzzy::BaseFaits> 	base_faits(new fuzzy::BaseFaits({*pA, *pB, *pG, *pF, *pE, *pC, *pD}));
-	std::shared_ptr<fuzzy::BaseRegles>	base_regles(new fuzzy::BaseRegles({*pR1, *pR2, *pR3, *pR4}));
+	std::shared_ptr<fuzzy::BaseFaits> 	base_faits(new fuzzy::BaseFaits({pA, pB, pE}));
+	std::shared_ptr<fuzzy::BaseRegles>	base_regles(new fuzzy::BaseRegles({pR2}));
 
 	std::cout << "Launching engine... ";
-	fuzzy::MoteurInference engine(base_faits, base_regles);
+	fuzzy::MoteurInference engine(base_faits, base_regles, 3);
 	std::cout << "Done." << std::endl;
 	std::cout << "Evaluating missing vars." << std::endl;
 	engine.evaluerFaitsManquants();
+
+	std::cout << "E.value = { ";
+	for (auto& note : fuzzy::MoteurInference::liste_notes) {
+		std::cout << pE->value.getMembershipValue(note) << " ";
+	}
+	std::cout << "}" << std::endl;
+
 }
