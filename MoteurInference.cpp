@@ -191,4 +191,35 @@ namespace fuzzy {
 
 		return success;
 	}
+	
+	
+	void MoteurInference::construireLingVars(std::map<std::string, LingVar> tables) {
+		for (auto& fait : base_faits->getData()) {
+			if (base_faits->get(fait.first)->eval) {
+				auto fait_courant = base_faits->get(fait.first);
+				// std::cout << fait_courant->nom << " : " << fait_courant->value.name << std::endl;
+				try {
+					fait_courant->value = tables.at(fait_courant->value.name);
+				} catch (const std::out_of_range& oor) {
+					std::cout << "The element " << fait.first << " does not exist in the table." << std::endl;
+				}
+			}
+		}
+		for (auto& regle : base_regles->getData()) {
+			for (auto& prem : base_regles->get(regle.first)->prem) {
+				try {
+					prem->value = tables.at(prem->value.name);
+				} catch (const std::out_of_range& oor) {
+					std::cout << "The element " << prem->value.name << " does not exist in the table." << std::endl;
+				}
+			}
+			for (auto& concl : base_regles->get(regle.first)->concl) {
+				try {
+					concl->value = tables.at(concl->value.name);
+				} catch (const std::out_of_range& oor) {
+					std::cout << "The element " << concl->value.name << " does not exist in the table." << std::endl;
+				}
+			}
+		}
+	}
 }

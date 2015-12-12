@@ -28,5 +28,6 @@ namespace fuzzy {
 		float evalCoeff(std::shared_ptr<Regle> rgl);
 		void evaluerFaitsManquants();
 		bool evaluerFait(std::shared_ptr<Fait> fait_courant, std::list<std::shared_ptr<Fait> > prec_faits);
+		void construireLingVars(std::map<std::string, LingVar> tables);
 	};
 }

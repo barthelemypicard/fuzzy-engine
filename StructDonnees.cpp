@@ -20,7 +20,8 @@ namespace fuzzy {
   float LingVar::getMembershipValue(float var_val) {
     float result = 0.0;
     if (vec_keys.size() == 0 || vec_keys.size() != vec_values.size()) {
-      std::cout << "Vecteurs non initiliasés, vides, ou de tailles différentes";
+      std::cout << "Failed to evaluate LingVar : " << ((vec_keys.size() == 0) ? "Not initialized" : "vec_keys and vec_values have difference size") << std::endl;
+      // std::cout << "Vecteurs non initiliasés, vides, ou de tailles différentes";
       return result;
     }
     result = vec_values[0]; 
