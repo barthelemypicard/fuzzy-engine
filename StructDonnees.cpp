@@ -90,7 +90,7 @@ namespace fuzzy {
   }
   
   
-  bool BaseRegles::addRegle(std::shared_ptr<Regle> r){
+  void BaseRegles::addRegle(std::shared_ptr<Regle> r){
     data.insert(std::pair<std::string, std::shared_ptr<Regle> >(r->nom, r));
   }
   

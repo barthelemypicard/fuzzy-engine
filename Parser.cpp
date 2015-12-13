@@ -45,15 +45,17 @@ fuzzy::BaseFaits fuzzy::Parser::parseFaits_firstPass(std::string filename, int n
       	if(tmp!=""){
       	  vf.push_back(std::make_shared<fuzzy::Fait>(fuzzy::Fait(tmp, true, false, 0, "default text")));
       	  std::cout<<"ajout fait: "<<tmp<<std::endl;
+       	  fichier>>tmp;//lecture de la variable linguistique
+       	  std::cout<<"variable linguistique associée: "<<tmp<<std::endl;
+       	  vf.back()->value=LingVar(tmp,"description par defaut");
+       	  fichier>>tmp;//lecture de l'opérateur suivant
+       	  std::cout<<"opérateur: "<<tmp<<std::endl; 
       	}
       	else{
       	  std::cout<<"Fait déjà présent"<<std::endl;
+            fichier>>tmp;
+            fichier>>tmp;
       	}
-       	fichier>>tmp;//lecture de la variable linguistique
-       	std::cout<<"variable linguistique associée: "<<tmp<<std::endl;
-       	vf.back()->value=LingVar(tmp,"description par defaut");
-       	fichier>>tmp;//lecture de l'opérateur suivant
-       	std::cout<<"opérateur: "<<tmp<<std::endl; 
        }while(tmp!="Certitude");
        fichier>>tmp;//récupération de la valeur de la certitude
        std::cout<<"valeur de certitude: "<<tmp<<std::endl;
@@ -79,8 +81,9 @@ fuzzy::BaseRegles fuzzy::Parser::parseRegles(std::string filename, int n){
   int i=1;
   while(i<n+1){
     getline(fichier, tmp);
-    std::vector<std::shared_ptr<fuzzy::Fait> > v;//inutile mais nécessaire...
-    fuzzy::Regle r(tmp, v, v, true, (float)0.0);
+    std::vector<std::shared_ptr<fuzzy::Fait> > p;//inutile mais nécessaire...
+    std::vector<std::shared_ptr<fuzzy::Fait> > c;//inutile mais nécessaire...
+    fuzzy::Regle r(tmp, p, c, true, (float)0.0);
     std::cout<<"Regle: "<<tmp<<std::endl;
     fichier>>tmp;
     std::cout<<"Premisses:"<<std::endl;
@@ -126,7 +129,7 @@ void fuzzy::Parser::parseFaits_bulletin(const std::string filename, fuzzy::BaseF
 	std::cout<<"Fait déja présent"<<std::endl;
 	p->eval=true;
 	fichier>>tmp;
-	p->value=fuzzy::LingVar("TB", "default description");
+	p->value=fuzzy::LingVar(tmp, "default description");
 	fichier>>tmp;
 	p->coeff=stof(tmp);
 	std::cout<<"evaluation faite"<<std::endl;

@@ -1,12 +1,12 @@
 resultat_math             TB   0.9
 resultat_biolo            B    0.7
 resultat_chimie           B    1.0
-resultat_chysique         TB   1.0
+resultat_physique         TB   1.0
 resultat_info             AB   1.0
-resultat_francais         TB   0.8
+resultat_francais         AB   0.8
 resultat_philo            B    1.0
 resultat_eco              AB   1.0
-resultat_histGeo          B    0.6
+resultat_hist_geo         AB   0.6
 resultat_latin            TB   1.0
 resultat_anglais          B    0.9
 resultat_allemand         AB   1.0

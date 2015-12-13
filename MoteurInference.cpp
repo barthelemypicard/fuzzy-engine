@@ -27,6 +27,7 @@ namespace fuzzy {
 			std::cout << "Cannot compute Immplication Matrix." << std::endl;
 			return Imp_Mat();
 		}
+		// nécessaire à définir à cause du conflit float/double dans le tableau inter
 		float un = 1.0;
 		float zero = 0.0; 
 		Imp_Mat result;
@@ -169,7 +170,8 @@ namespace fuzzy {
 				for (auto& pre : rgl->prem) {
 					std::vector<float> A = lingVarToArray(pre->value);
 					std::vector<float> B = lingVarToArray(base_faits->get(pre->nom)->value);
-					Imp_Mat AtoB = computeImpMat(A, B, norme);
+					std::vector<float> C = lingVarToArray(rgl->concl[0]->value);
+					Imp_Mat AtoB = computeImpMat(C, A, norme);
 					std::vector<float> R = conclPourPremice(B, AtoB);
 					current_concl = std::min(current_concl, R);
 				}

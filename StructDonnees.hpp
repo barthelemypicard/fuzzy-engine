@@ -70,7 +70,7 @@ namespace fuzzy {
     BaseRegles& operator=(BaseRegles&& br);
     ~BaseRegles();
     
-    bool addRegle(std::shared_ptr<Regle> r);
+    void addRegle(std::shared_ptr<Regle> r);
     void addRegles(std::vector<std::shared_ptr<Regle> > regles);
     void rmRegle(std::string regle);
     std::shared_ptr<Regle> get(const std::string& nom) const;
